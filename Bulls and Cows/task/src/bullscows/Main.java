@@ -18,17 +18,18 @@ public class Main {
 
         while (!stop) {
             attepmptCounter++;
+
             System.out.print("Turn " + attepmptCounter + ". Answer: ");
             answer = scanner.nextLine();
             grade = main.gradeProcessor(code, answer);
 
-            if (grade.equals("4 bulls.")) {
-                System.out.println("Congrats! The code is: " + code);
+            if (grade.equals("4 bull(s)")) {
+                System.out.println("Congrats! The secret code is: " + code);
                 stop = true;
+            } else {
+                System.out.println("Grade: " + grade + ". The secret code is " + code);
             }
         }
-
-
 
     }
 
@@ -45,7 +46,7 @@ public class Main {
     public String gradeProcessor(String code, String answer) {
         int bullCounter = 0;
         int cowCounter = 0;
-        String result = "";
+        String result = "None";
 
         // Arranging the codeArray
         int[] codeArray = new int[code.length()];
@@ -75,11 +76,11 @@ public class Main {
         }
 
         if (bullCounter != 0 && cowCounter == 0) {
-            result = bullCounter + " bulls.";
+            result = bullCounter + " bull(s)";
         } else if (bullCounter == 0 && cowCounter != 0) {
-            result = cowCounter + " cows.";
+            result = cowCounter + " cow(s)";
         } else if (bullCounter != 0 && cowCounter != 0) {
-            result = bullCounter + " bulls and " + cowCounter + " cows.";
+            result = bullCounter + " bull(s) and " + cowCounter + " cow(s)";
         }
 
         return result;
