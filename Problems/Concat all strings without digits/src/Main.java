@@ -17,6 +17,5 @@ class ConcatenateStringsProblem {
         String[] strings = scanner.nextLine().split("\\s+");
         String result = concatenateStringsWithoutDigits(strings);
         System.out.println(result);
-
     }
 }
