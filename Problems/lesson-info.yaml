@@ -7,3 +7,4 @@ content:
 - Quadratic equation
 - Vowel or not
 - Avoid division by zero
+- Return empty string when argument is null
