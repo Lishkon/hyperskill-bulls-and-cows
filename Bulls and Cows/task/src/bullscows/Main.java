@@ -1,55 +1,13 @@
 package bullscows;
 
 import java.util.*;
-import java.util.jar.JarOutputStream;
 
 public class Main {
     public static void main(String[] args) {
-//        String code = generateCode();
-//        String answer = "";
-//        String grade = "";
-//
-//        int attepmptCounter = 0;
-//        boolean stop = false;
-//        Main main = new Main();
-//
-//        // Prompt the user
+
         Scanner scanner = new Scanner(System.in);
         generateCode(scanner.nextInt());
-//        System.out.println("The secret code is prepared: ****.");
-//
-//        while (!stop) {
-//            attepmptCounter++;
-//
-//            System.out.print("Turn " + attepmptCounter + ". Answer: ");
-//            answer = scanner.nextLine();
-//            grade = main.gradeProcessor(code, answer);
-//
-//            if (grade.equals("4 bull(s)")) {
-//                System.out.println("Congrats! The secret code is: " + code);
-//                stop = true;
-//            } else {
-//                System.out.println("Grade: " + grade + ". The secret code is " + code);
-//            }
-//        }
 
-//        generateCode(scanner.nextInt());
-//        System.out.println(modulize(scanner.nextInt()));
-
-    }
-
-    /**
-     * Generates a random 4-digit long code with unique numbers
-     * @return String
-     */
-    public static String generateCode() {
-        Integer[] arr = {0,1,2,3,4,5,6,7,8,9};
-        Collections.shuffle(Arrays.asList(arr));
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < 4; i++) {
-            result.append(arr[i]);
-        }
-        return result.toString();
     }
 
 
@@ -61,26 +19,36 @@ public class Main {
     public static void generateCode(int length) {
         Long randomNumber = System.nanoTime();
         String numToString = String.valueOf(randomNumber);
-
         StringBuilder result = new StringBuilder();
-        for (int i = numToString.length()-1; i > 0; i--) {
-            for (int j = 0; j < length; j++) {
-                if (isUniqueChar(result.charAt(j), numToString)) {
-                    result.append(numToString.charAt(i));
-                } else {
-                    return;
+
+        if (length <= 10) {
+            for (int i = numToString.length() - 1; i > 0; i--) {
+                if (result.length()<length) {
+                    if (result.length() == 0) {
+                        if (!(numToString.charAt(i) == '0')) {
+                            result.append(numToString.charAt(i));
+                        }
+                    } else if (!isUniqueChar(numToString.charAt(i), result.toString())) {
+                        result.append(numToString.charAt(i));
+                    }
                 }
             }
+            System.out.println("The random secret number is " + result.toString());
+        } else {
+            System.out.printf("Error: can't generate a secret number with a length of %d because there aren't enough unique digits.", length);
         }
-        System.out.println(result);
 
     }
 
-    public static boolean isUniqueChar(char ch, String token) {
-        return token.contains(String.valueOf(ch));
+    private static boolean isUniqueChar(char ch, String token) {
+        if (token.isEmpty()) {
+            return false;
+        } else {
+            return token.contains(String.valueOf(ch));
+        }
     }
 
-    public String gradeProcessor(String code, String answer) {
+    private String gradeProcessor(String code, String answer) {
         int bullCounter = 0;
         int cowCounter = 0;
         String result = "None";
