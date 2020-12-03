@@ -3,10 +3,37 @@ package bullscows;
 import java.util.*;
 
 public class Main {
+    static String secretCode;
+    static String result;
+    static boolean gameOver;
+
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
-        generateCode(scanner.nextInt());
+
+        System.out.println("Please, enter the secret code's length:");
+
+        int guessLength = scanner.nextInt();
+        String guessNumber;
+        int count = 0;
+
+        System.out.println("Okay, let's start a game!");
+
+        generateCode(guessLength);
+
+        while (true) {
+            count++;
+            System.out.println("Turn " + count + ":");
+            guessNumber = scanner.next();
+            gradeProcessor(secretCode, guessNumber);
+            System.out.println(result);
+
+            if (gameOver) {
+                System.out.println("Congratulations! You guessed the secret code.");
+                break;
+            }
+        }
+
 
     }
 
@@ -32,8 +59,8 @@ public class Main {
                         result.append(numToString.charAt(i));
                     }
                 }
+                secretCode = result.toString();
             }
-            System.out.println("The random secret number is " + result.toString());
         } else {
             System.out.printf("Error: can't generate a secret number with a length of %d because there aren't enough unique digits.", length);
         }
@@ -48,10 +75,10 @@ public class Main {
         }
     }
 
-    private String gradeProcessor(String code, String answer) {
+    private static void gradeProcessor(String code, String answer) {
         int bullCounter = 0;
         int cowCounter = 0;
-        String result = "None";
+        result = "None";
 
         // Arranging the codeArray
         int[] codeArray = new int[code.length()];
@@ -67,7 +94,7 @@ public class Main {
 
         // Counting the bulls and cows
         if (code.equals(answer)) {
-            bullCounter = 4;
+            bullCounter = answer.length();
         } else {
             for (int i = 0; i < answerArray.length; i++) {
                 for (int j = 0; j < codeArray.length; j++) {
@@ -82,12 +109,14 @@ public class Main {
 
         if (bullCounter != 0 && cowCounter == 0) {
             result = bullCounter + " bull(s)";
+            if (bullCounter == answer.length()) {
+                gameOver = true;
+            }
         } else if (bullCounter == 0 && cowCounter != 0) {
             result = cowCounter + " cow(s)";
         } else if (bullCounter != 0 && cowCounter != 0) {
             result = bullCounter + " bull(s) and " + cowCounter + " cow(s)";
         }
 
-        return result;
     }
 }
