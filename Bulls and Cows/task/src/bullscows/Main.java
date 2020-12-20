@@ -33,8 +33,6 @@ public class Main {
                 break;
             }
         }
-
-
     }
 
 
@@ -67,6 +65,12 @@ public class Main {
 
     }
 
+    /**
+     * Checks if the char containing in the provided string is unique
+     * @param ch
+     * @param token
+     * @return
+     */
     private static boolean isUniqueChar(char ch, String token) {
         if (token.isEmpty()) {
             return false;
@@ -75,6 +79,11 @@ public class Main {
         }
     }
 
+    /**
+     * Grade Processor method implementation. Covers all the logic for the game, related to counting the bulls and cows and printing out the result of the analysis.
+     * @param code
+     * @param answer
+     */
     private static void gradeProcessor(String code, String answer) {
         int bullCounter = 0;
         int cowCounter = 0;
@@ -107,6 +116,7 @@ public class Main {
             }
         }
 
+        // Creating a result string
         if (bullCounter != 0 && cowCounter == 0) {
             result = bullCounter + " bull(s)";
             if (bullCounter == answer.length()) {
